@@ -1,15 +1,14 @@
 {
-	"name":"com.PG.Framework",
+	"name": "com.pg.framework",
 	"displayName":"PGFramework",
 	"version":"1.0.0",
 	"unity":"2019.3",
 	"description":"自用框架",
 	"keywords":["PGFramework","PG框架","PG"],
-	"category":"PG",
 	"dependencies":{
-		"com.unity.addressables":"1.18.19"
-		"com.unity.ui":"1.0.0"
-	}
+		"com.unity.addressables":"1.18.19",
+		"com.unity.ugui":"1.0.0"
+	},
 	"samples":[
 		{
 			"displayName":"Demo",
