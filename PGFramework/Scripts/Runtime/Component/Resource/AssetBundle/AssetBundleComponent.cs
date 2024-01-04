@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PGFrammework.Res
 {
-    public class AssetBundleComponent : MonoBehaviour
+    public class AssetBundleComponent : MonoBehaviour, IResourse
     {
         /// <summary>
         /// AssetBundle资源依赖
@@ -40,11 +40,11 @@ namespace PGFrammework.Res
         /// </summary>
         /// <param name="varPath"></param>
         /// <param name="Callback"></param>
-        public void LoadAssets(string varPath, LoadAssetBundleCallback Callback)
+        public void LoadAssets(string varPath, LoadResourcesCallback Callback)
         {
             StartCoroutine(LoadAsyncAssets(varPath, Callback));
         }
-        IEnumerator LoadAsyncAssets(string varPath, LoadAssetBundleCallback Callback)
+        IEnumerator LoadAsyncAssets(string varPath, LoadResourcesCallback Callback)
         {
             yield return null;
             string filename = Path.GetFileNameWithoutExtension(varPath);
@@ -52,7 +52,7 @@ namespace PGFrammework.Res
             AssetBundle assetBundle = null;
             yield return StartCoroutine(LoadAsyncAssetBundle(assetbundlename, (varassetbundle) =>
             {
-                assetBundle = varassetbundle;
+                assetBundle = varassetbundle as AssetBundle;
             }));
             if (assetBundle != null)
             {
@@ -81,11 +81,11 @@ namespace PGFrammework.Res
         /// </summary>
         /// <param name="varPath"></param>
         /// <param name="Callback"></param>
-        public void LoadScene(string varPath, LoadAssetBundleCallback Callback)
+        public void LoadScene(string varPath, LoadResourcesCallback Callback)
         {
             StartCoroutine(LoadAsyncScene(varPath, Callback));
         }
-        IEnumerator LoadAsyncScene(string varPath, LoadAssetBundleCallback Callback)
+        IEnumerator LoadAsyncScene(string varPath, LoadResourcesCallback Callback)
         {
             yield return null;
             string filename = Path.GetFileNameWithoutExtension(varPath);
@@ -93,7 +93,7 @@ namespace PGFrammework.Res
             AssetBundle assetBundle = null;
             yield return StartCoroutine(LoadAsyncAssetBundle(assetbundlename, (varassetbundle) =>
             {
-                assetBundle = varassetbundle;
+                assetBundle = varassetbundle as AssetBundle;
             }));
             if (assetBundle != null)
             {
@@ -116,7 +116,7 @@ namespace PGFrammework.Res
         /// <param name="varAssetBundleName"></param>
         /// <param name="assetBundleFinish"></param>
         /// <returns></returns>
-        IEnumerator LoadAsyncAssetBundle(string varAssetBundleName, LoadAssetBundleFinish assetBundleFinish)
+        IEnumerator LoadAsyncAssetBundle(string varAssetBundleName, LoadResourcesFinish assetBundleFinish)
         {
             //确保Key值统一标准
             varAssetBundleName = varAssetBundleName.Replace("\\", "/");

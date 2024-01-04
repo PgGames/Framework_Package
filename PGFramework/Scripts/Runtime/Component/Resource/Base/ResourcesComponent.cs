@@ -17,7 +17,7 @@ namespace PGFrammework.Runtime
         [SerializeField] private ResourcesLoadType m_LoadMode = ResourcesLoadType.AssetBundle;
 
 
-
+        private UnityEditorComponent m_Editor;
         private AssetBundleComponent m_AssetBundle;
         /// <summary>
         /// 待加载资源
@@ -192,15 +192,25 @@ namespace PGFrammework.Runtime
         /// <param name="scene"></param>
         private void ResourcesLoad(string assetsName, bool scene)
         {
+            IResourse resourse = null;
             switch (m_LoadMode)
             {
                 case ResourcesLoadType.AssetBundle:
-                    AssetBudleLoad(assetsName, scene);
+                    resourse = m_AssetBundle;
                     break;
                 case ResourcesLoadType.Editor:
+                    resourse = m_Editor;
                     break;
                 default:
-                    break;
+                    throw new System.Exception($"current LoadMode {m_LoadMode} is not exist");
+            }
+            if (scene)
+            {
+                resourse.LoadScene(assetsName, LoadAssetAsyn);
+            }
+            else
+            {
+                resourse.LoadAssets(assetsName, LoadAssetAsyn);
             }
         }
 
