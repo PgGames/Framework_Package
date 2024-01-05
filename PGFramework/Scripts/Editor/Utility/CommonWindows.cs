@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     public class CommonWindow 
     {

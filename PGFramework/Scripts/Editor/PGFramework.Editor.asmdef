@@ -2,7 +2,8 @@
     "name": "PGFramework.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:fff7693027a62ff40a178bac5b1bfb0a"
+        "GUID:fff7693027a62ff40a178bac5b1bfb0a",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

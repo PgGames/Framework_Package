@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     public class CommonEditorWindow : EditorWindow
     {

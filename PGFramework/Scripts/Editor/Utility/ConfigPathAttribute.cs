@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     /// <summary>
     /// 配置路径属性。

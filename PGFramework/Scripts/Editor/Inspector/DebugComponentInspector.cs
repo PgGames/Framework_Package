@@ -1,7 +1,7 @@
 ﻿using PGFrammework.Runtime;
 using UnityEditor;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
 
     [CustomEditor(typeof(DebugComponent))]

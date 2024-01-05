@@ -1,8 +1,8 @@
 ﻿using UnityEditor;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
-    public abstract class FrameworkInspector : UnityEditor.Editor
+    public class FrameworkInspector : Editor
     {
         private bool m_IsCompiling = false;
 

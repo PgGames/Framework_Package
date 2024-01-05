@@ -42,9 +42,9 @@ namespace PGFrammework.Runtime
             }
 
 #if !UNITY_EDITOR
-            if (m_Mode == ResourcesLoadType.Editor)
+            if (m_LoadMode == ResourcesLoadType.Editor)
             {
-                m_Mode = ResourcesLoadType.AssetBundle;
+                m_LoadMode = ResourcesLoadType.AssetBundle;
             }
 #endif
 

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     [CustomPropertyDrawer(typeof(DisplayOnly))]
     public class ReadOnlyDrawer : PropertyDrawer

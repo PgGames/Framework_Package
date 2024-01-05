@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     [CustomEditor(typeof(BaseComponent))]
     public class BaseComponentInspector :FrameworkInspector

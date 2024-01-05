@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     public class AssetBundleWindows : EditorWindow
     {
@@ -166,7 +166,7 @@ namespace PGFrammework.Editor
         public override void Init()
         {
             mIsDelectManifest = false;
-            mAssetFoler = Application.dataPath + "/GResources";
+            mAssetFoler = Application.dataPath + "/HotResources";
             mAssetBundleFoler = Application.streamingAssetsPath;
         }
     }

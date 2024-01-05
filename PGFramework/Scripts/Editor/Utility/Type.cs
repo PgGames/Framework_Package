@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace PGFrammework.Editor
+namespace PGFrammework.PGEditor
 {
     public class Type
     {
