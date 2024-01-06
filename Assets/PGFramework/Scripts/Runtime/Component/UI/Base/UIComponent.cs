@@ -45,13 +45,23 @@ namespace PGFrammework.Runtime
             AddGroup(UIGroupInfo.GetInfo(varGroupName, varDepth));
         }
 
-
-
-        public void OpenUI(string assetsName, int varDepth ,LoadUISuccess uISuccess, LoadUIFail uIFail)
+        public void OpenUI(string assetsName, int varDepth, LoadUIResult loadUIResult,object usedata = null)
         {
             if (m_AllGroup.ContainsKey(varDepth))
             {
-                m_AllGroup[varDepth].OpenUI(assetsName, uISuccess, uIFail);
+                m_AllGroup[varDepth].OpenUI(assetsName, loadUIResult, usedata);
+            }
+            else
+            {
+                FrameworkLog.Fatal($"UI Group Depth :{varDepth} non existent !");
+            }
+        }
+
+        public void OpenUI(string assetsName, int varDepth ,LoadUISuccess uISuccess, LoadUIFail uIFail = null,object userData = null)
+        {
+            if (m_AllGroup.ContainsKey(varDepth))
+            {
+                m_AllGroup[varDepth].OpenUI(assetsName, uISuccess, uIFail, userData);
             }
             else
             {
