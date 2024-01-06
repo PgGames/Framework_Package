@@ -13,7 +13,7 @@ namespace PGFrammework
         {
         }
         /// <summary>
-        /// ¼ì²éÊı¾İ±íÊÇ·ñÒÑ´æÔÚ
+        /// æ£€æŸ¥æ•°æ®è¡¨æ˜¯å¦å·²å­˜åœ¨
         /// </summary>
         /// <param name="tableType"></param>
         /// <returns></returns>
@@ -23,29 +23,29 @@ namespace PGFrammework
         }
 
         /// <summary>
-        /// ¼ÓÔØ±í¸ñ
+        /// åŠ è½½è¡¨æ ¼
         /// </summary>
-        /// <param name="path">±í¸ñÂ·¾¶</param>
-        /// <param name="varTableName">±í¸ñÃû³Æ</param>
-        /// <param name="success">¼ÓÔØ»Øµ÷</param>
-        /// <param name="userData">ÓÃ»§×Ô¶¨ÒåÊı¾İ</param>
+        /// <param name="path">è¡¨æ ¼è·¯å¾„</param>
+        /// <param name="varTableName">è¡¨æ ¼åç§°</param>
+        /// <param name="success">åŠ è½½å›è°ƒ</param>
+        /// <param name="userData">ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®</param>
         public void LoadDataTable(string path, string varTableName, LoadDataTableCall success, object userData)
         {
             TableReader.LoadDataTable(path, varTableName, success, userData);
         }
         /// <summary>
-        /// ¼ÓÔØ±í¸ñ
+        /// åŠ è½½è¡¨æ ¼
         /// </summary>
-        /// <param name="varTextAsset">±í¸ñÊı¾İ</param>
-        /// <param name="varTableName">±í¸ñÃû³Æ</param>
-        /// <param name="success">¼ÓÔØ»Øµ÷</param>
-        /// <param name="userData">ÓÃ»§×Ô¶¨ÒåÊı¾İ</param>
+        /// <param name="varTextAsset">è¡¨æ ¼æ•°æ®</param>
+        /// <param name="varTableName">è¡¨æ ¼åç§°</param>
+        /// <param name="success">åŠ è½½å›è°ƒ</param>
+        /// <param name="userData">ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®</param>
         public void LoadDataTable(TextAsset varTextAsset, string varTableName, LoadDataTableCall success, object userData)
         {
             TableReader.LoadDataTable(varTextAsset, varTableName, success, userData);
         }
         /// <summary>
-        /// ´´½¨±í¸ñÊı¾İ
+        /// åˆ›å»ºè¡¨æ ¼æ•°æ®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -55,7 +55,7 @@ namespace PGFrammework
             return TableReader.CreateDataTable<T>(path);
         }
         /// <summary>
-        /// ´´½¨±í¸ñÊı¾İ
+        /// åˆ›å»ºè¡¨æ ¼æ•°æ®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -65,7 +65,7 @@ namespace PGFrammework
             return TableReader.CreateDataTable<T>(varTextAsset);
         }
         /// <summary>
-        /// »ñÈ¡±í¸ñÊı¾İ
+        /// è·å–è¡¨æ ¼æ•°æ®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -75,7 +75,7 @@ namespace PGFrammework
         }
 
         /// <summary>
-        /// ×¢Ïú±í¸ñ
+        /// æ³¨é”€è¡¨æ ¼
         /// </summary>
         /// <param name="varDataTableName"></param>
         public void UnDataTable(string varDataTableName)
@@ -83,7 +83,7 @@ namespace PGFrammework
             TableReader.UnDataTable(varDataTableName);
         }
         /// <summary>
-        /// ×¢Ïú±í¸ñ
+        /// æ³¨é”€è¡¨æ ¼
         /// </summary>
         /// <param name="dataRowType"></param>
         public void UnDataTable(Type dataRowType)
