@@ -8,6 +8,14 @@ namespace PGFrammework.Runtime
     public class UIComponent : FrameworkComponent
     {
         [SerializeField, DisplayOnly] private List<UIGroupInfo> m_Groups = new List<UIGroupInfo>();
+        /// <summary>
+        /// 定期回收关闭的窗口
+        /// </summary>
+        [SerializeField, DisplayOnly] private bool m_RegularRecycling = true;
+        /// <summary>
+        /// 回收间隔
+        /// </summary>
+        [SerializeField, DisplayOnly] private float m_RecoveryTimes = 60;
 
         private Transform m_UIRoot;
 
@@ -102,6 +110,9 @@ namespace PGFrammework.Runtime
                 tempClone.transform.localScale = Vector3.one;
 
                 UIGroupBase groupBase =  tempClone.AddComponent<UIGroupBase>();
+
+                info.RegularRecycling = m_RegularRecycling;
+                info.RecoveryTimes = m_RecoveryTimes;
 
                 groupBase.Init(info);
             }

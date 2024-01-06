@@ -41,7 +41,7 @@ namespace PGFrammework.UI
         {
         }
         /// <summary>
-        /// 清楚说有UI界面
+        /// 清除所有UI界面
         /// </summary>
         public void ClearAllUI()
         {
@@ -100,7 +100,7 @@ namespace PGFrammework.UI
             uICanvasBase.transform.localEulerAngles = Vector3.zero;
             uICanvasBase.transform.localScale = Vector3.one;
 
-            uICanvasBase.InitUI(m_Info, new UIInfo() { AssetsName = assetName, GroupDepth = m_Info.Depth, UIDepth = m_AllUICanvas.Count + 1 }, date.usedata);
+            uICanvasBase.InitUI(m_Info, new UIInfo(assetName, m_Info.Depth) { UIDepth = m_AllUICanvas.Count + 1 }, date.usedata);
 
             m_AllUICanvas.Add(uICanvasBase);
 

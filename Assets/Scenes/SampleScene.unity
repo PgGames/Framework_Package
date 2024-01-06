@@ -356,5 +356,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Builtin
       objectReference: {fileID: 0}
+    - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
+      propertyPath: m_Groups.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
+      propertyPath: m_Groups.Array.data[1].m_Depth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
