@@ -9,9 +9,10 @@ namespace PGFrammework.UI
         private UIGroupInfo m_GroupInfo;
         private UIInfo m_UIInfo;
         private Coroutine m_CloseTimer;
+        private Canvas m_Canvas;
 
         public UIInfo GetUI { get => m_UIInfo; }
-        public Canvas m_Canvas;
+        public string AssetsName { get => m_UIInfo.AssetsName; }
 
         public int GetDepth { get { return m_UIInfo.GroupDepth * 100 + m_UIInfo.UIDepth; } }
 
@@ -32,6 +33,8 @@ namespace PGFrammework.UI
                 component.StopCoroutine(m_CloseTimer);
             }
             Open(userdata);
+
+            this.gameObject.SetActive(true);
         }
         public void CloseUI(object userdata)
         {
@@ -42,10 +45,18 @@ namespace PGFrammework.UI
                 m_CloseTimer = component.StartCoroutine(CloseTimer());
             }
             Close(userdata);
+
+            this.gameObject.SetActive(false);
         }
 
         public void RecoveryUI()
-        { 
+        {
+            //关闭回收计时器
+            if (m_CloseTimer != null)
+            {
+                UIComponent component = GameComponent.Instance.GetComponent<UIComponent>();
+                component.StopCoroutine(m_CloseTimer);
+            }
         }
 
         private IEnumerator CloseTimer()
@@ -83,13 +94,17 @@ namespace PGFrammework.UI
         /// 回收界面
         /// </summary>
         protected void RecoverySelf()
-        { 
+        {
+            UIComponent component = GameComponent.Instance.GetComponent<UIComponent>();
+            component.ClearUI(m_UIInfo);
         }
         /// <summary>
         /// 关闭自身
         /// </summary>
         protected void ShutDown()
-        { 
+        {
+            UIComponent component = GameComponent.Instance.GetComponent<UIComponent>();
+            component.CloseUI(m_UIInfo);
         }
     }
 }

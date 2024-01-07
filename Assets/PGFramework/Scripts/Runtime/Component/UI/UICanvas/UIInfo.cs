@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PGFrammework.UI
 {
-    public struct UIInfo
+    public class UIInfo
     {
         private string m_AssetsName;
         private int m_GroupDepth;
