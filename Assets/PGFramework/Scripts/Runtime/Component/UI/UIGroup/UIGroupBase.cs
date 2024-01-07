@@ -38,7 +38,7 @@ namespace PGFrammework.UI
         {
             OpenUI(assetName, null, success, fail, usedata, single);
         }
-        public void CloseUI(UIInfo uIInfo,object userdata)
+        public void CloseUI(UIInfo uIInfo)
         {
 
             UICanvasBase uibase = GetUICanvas(uIInfo);
