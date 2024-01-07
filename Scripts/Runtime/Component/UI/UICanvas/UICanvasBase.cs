@@ -32,11 +32,11 @@ namespace PGFrammework.UI
                 UIComponent component = GameComponent.Instance.GetComponent<UIComponent>();
                 component.StopCoroutine(m_CloseTimer);
             }
-            Open(userdata);
+            OnOpen(userdata);
 
             this.gameObject.SetActive(true);
         }
-        public void CloseUI(object userdata)
+        public void CloseUI()
         {
             //开启回收计时器
             if (m_GroupInfo.RegularRecycling)
@@ -44,7 +44,7 @@ namespace PGFrammework.UI
                 UIComponent component = GameComponent.Instance.GetComponent<UIComponent>();
                 m_CloseTimer = component.StartCoroutine(CloseTimer());
             }
-            Close(userdata);
+            OnClose();
 
             this.gameObject.SetActive(false);
         }
@@ -72,17 +72,17 @@ namespace PGFrammework.UI
         /// 界面初始化
         /// </summary>
         /// <param name="userdata"></param>
-        protected abstract void Init(object userdata);
+        protected abstract void OnInit(object userdata);
         /// <summary>
         /// 界面被开启
         /// </summary>
         /// <param name="userdata"></param>
-        protected abstract void Open(object userdata);
+        protected abstract void OnOpen(object userdata);
         /// <summary>
         /// 界面被关闭
         /// </summary>
         /// <param name="userdata"></param>
-        protected abstract void Close(object userdata);
+        protected abstract void OnClose();
         /// <summary>
         /// 界面被回收
         /// </summary>
