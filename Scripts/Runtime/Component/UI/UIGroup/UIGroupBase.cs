@@ -42,36 +42,25 @@ namespace PGFrammework.UI
         {
 
             UICanvasBase uibase = GetUICanvas(uIInfo);
+            uibase.CloseUI();
 
-            if (m_AllUICanvas.Contains(uibase))
-            {
-                m_AllUICanvas.Remove(uibase);
-                m_LastUICanvas.Add(uibase);
-            }
+            UpdateUIDeptg(uibase, UpdateDepthType.Close);
 
-            uibase.CloseUI(userdata);
         }
-        public void ClearUI(UIInfo uIInfo)
+        public void RecoveryUI(UIInfo uIInfo)
         {
             UICanvasBase uibase = GetUICanvas(uIInfo);
-
-            if (m_AllUICanvas.Contains(uibase))
-            {
-                m_AllUICanvas.Remove(uibase);
-            }
-            if (m_LastUICanvas.Contains(uibase))
-            {
-                m_LastUICanvas.Remove(uibase);
-            }
-
             uibase.RecoveryUI();
+
+            UpdateUIDeptg(uibase, UpdateDepthType.RecoveryUI);
+
 
             GameObject.Destroy(uibase.gameObject);
         }
         /// <summary>
-        /// 清除所有UI界面
+        /// 回收所有UI界面
         /// </summary>
-        public void ClearAllUI()
+        public void RecoveryAllUI()
         {
             foreach (var item in m_AllUICanvas)
             {
@@ -96,6 +85,44 @@ namespace PGFrammework.UI
             m_LastUICanvas.Clear();
 
         }
+
+
+
+        private void UpdateUIDeptg(UICanvasBase uibase, UpdateDepthType depthType)
+        {
+
+
+            switch (depthType)
+            {
+                case UpdateDepthType.Open:
+                    if (m_AllUICanvas.Contains(uibase))
+                        m_AllUICanvas.Remove(uibase);
+                    if (m_LastUICanvas.Contains(uibase))
+                        m_LastUICanvas.Remove(uibase);
+                    m_AllUICanvas.Add(uibase);
+                    break;
+                case UpdateDepthType.Close:
+                    if (m_AllUICanvas.Contains(uibase))
+                        m_AllUICanvas.Remove(uibase);
+                    if (!m_LastUICanvas.Contains(uibase))
+                        m_LastUICanvas.Add(uibase);
+                    break;
+                case UpdateDepthType.RecoveryUI:
+                    if (m_AllUICanvas.Contains(uibase))
+                        m_AllUICanvas.Remove(uibase);
+                    if (m_LastUICanvas.Contains(uibase))
+                        m_LastUICanvas.Remove(uibase);
+                    break;
+                default:
+                    break;
+            }
+
+            for (int i = 0; i < m_AllUICanvas.Count; i++)
+            {
+                m_AllUICanvas[i].UIDepth = i + 1;
+            }
+        }
+
         /// <summary>
         /// 获取废弃的UI窗口
         /// </summary>
@@ -166,13 +193,7 @@ namespace PGFrammework.UI
                 UICanvasBase uibase = GetUICanvas(assetName);
                 if (uibase != null)
                 {
-                    if (m_AllUICanvas.Contains(uibase))
-                        m_AllUICanvas.Remove(uibase);
-
-                    if (m_LastUICanvas.Contains(uibase))
-                        m_LastUICanvas.Remove(uibase);
-
-                    m_AllUICanvas.Add(uibase);
+                    UpdateUIDeptg(uibase, UpdateDepthType.Open);
 
                     uibase.OpenUI(usedata);
 
@@ -189,10 +210,7 @@ namespace PGFrammework.UI
                 UICanvasBase uibase = GetLastUICanvas(assetName);
                 if (uibase != null)
                 {
-                    if (m_LastUICanvas.Contains(uibase))
-                        m_LastUICanvas.Remove(uibase);
-
-                    m_AllUICanvas.Add(uibase);
+                    UpdateUIDeptg(uibase, UpdateDepthType.Open);
 
                     uibase.OpenUI(usedata);
                     result?.Invoke(uibase, null, usedata);
@@ -256,22 +274,22 @@ namespace PGFrammework.UI
 
             GameObject clone = GameObject.Instantiate<GameObject>(game);
 
-            UICanvasBase uICanvasBase = clone.GetComponent<UICanvasBase>();
+            UICanvasBase uibase = clone.GetComponent<UICanvasBase>();
 
-            uICanvasBase.transform.SetParent(this.transform);
-            uICanvasBase.transform.localPosition = Vector3.zero;
-            uICanvasBase.transform.localEulerAngles = Vector3.zero;
-            uICanvasBase.transform.localScale = Vector3.one;
+            uibase.transform.SetParent(this.transform);
+            uibase.transform.localPosition = Vector3.zero;
+            uibase.transform.localEulerAngles = Vector3.zero;
+            uibase.transform.localScale = Vector3.one;
 
-            uICanvasBase.InitUI(m_Info, new UIInfo(assetName, m_Info.Depth) { UIDepth = m_AllUICanvas.Count + 1 }, date.usedata);
+            uibase.InitUI(m_Info, new UIInfo(assetName, m_Info.Depth) { UIDepth = m_AllUICanvas.Count + 1 }, date.usedata);
 
-            m_AllUICanvas.Add(uICanvasBase);
+            UpdateUIDeptg(uibase, UpdateDepthType.Open);
 
-            date.result?.Invoke(uICanvasBase, null, date.usedata);
-            date.success?.Invoke(uICanvasBase, userData);
+            date.result?.Invoke(uibase, null, date.usedata);
+            date.success?.Invoke(uibase, userData);
 
 
-            uICanvasBase.OpenUI(date.usedata);
+            uibase.OpenUI(date.usedata);
         }
         /// <summary>
         /// 加载UI资源失败
@@ -296,6 +314,14 @@ namespace PGFrammework.UI
             public LoadUISuccess success;
             public LoadUIFail fail;
             public object usedata;
+        }
+
+
+        private enum UpdateDepthType
+        {
+            Open,
+            Close,
+            RecoveryUI,
         }
     }
 }
