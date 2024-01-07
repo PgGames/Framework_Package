@@ -106,13 +106,13 @@ namespace PGFrammework.PGEditor
 
             BuildTarget target = BuildTarget.NoTarget;
 #if UNITY_STANDALONE_WIN
-            tempOutFoler = string.Format("{0}/Windows", data.mAssetBundleFoler);
+            tempOutFoler = string.Format("{0}/ab/Windows", data.mAssetBundleFoler);
             target = BuildTarget.StandaloneWindows;
 #elif UNITY_ANDROID
-		tempOutFoler = string.Format("{0}/Android",data.mAssetBundleFoler);
+		tempOutFoler = string.Format("{0}/ab/Android",data.mAssetBundleFoler);
 		target = BuildTarget.Android;
 #elif UNITY_IOS || UNITY_IPHONE
-		tempOutFoler = string.Format("{0}/IOS",data.mAssetBundleFoler);
+		tempOutFoler = string.Format("{0}/ab/IOS",data.mAssetBundleFoler);
 		target = BuildTarget.iOS;
 #endif
             if (!Directory.Exists(tempOutFoler))
