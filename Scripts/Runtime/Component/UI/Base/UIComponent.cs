@@ -53,11 +53,11 @@ namespace PGFrammework.Runtime
             AddGroup(UIGroupInfo.GetInfo(varGroupName, varDepth));
         }
 
-        public void OpenUI(string assetsName, int varDepth, LoadUIResult loadUIResult,object usedata = null)
+        public void OpenUI(string assetsName, int varDepth, LoadUIResult loadUIResult, object usedata = null,bool single = true)
         {
             if (m_AllGroup.ContainsKey(varDepth))
             {
-                m_AllGroup[varDepth].OpenUI(assetsName, loadUIResult, usedata);
+                m_AllGroup[varDepth].OpenUI(assetsName, loadUIResult, usedata, single);
             }
             else
             {
@@ -65,11 +65,11 @@ namespace PGFrammework.Runtime
             }
         }
 
-        public void OpenUI(string assetsName, int varDepth ,LoadUISuccess uISuccess, LoadUIFail uIFail = null,object userData = null)
+        public void OpenUI(string assetsName, int varDepth, LoadUISuccess uISuccess, LoadUIFail uIFail = null, object userData = null, bool single = true)
         {
             if (m_AllGroup.ContainsKey(varDepth))
             {
-                m_AllGroup[varDepth].OpenUI(assetsName, uISuccess, uIFail, userData);
+                m_AllGroup[varDepth].OpenUI(assetsName, uISuccess, uIFail, userData, single);
             }
             else
             {
@@ -89,7 +89,28 @@ namespace PGFrammework.Runtime
                 FrameworkLog.Fatal($"UI Group Depth :{uIInfo.GroupDepth} non existent !");
             }
         }
-
+        public void ClearUI(UIInfo uIInfo)
+        {
+            if (m_AllGroup.ContainsKey(uIInfo.GroupDepth))
+            {
+                m_AllGroup[uIInfo.GroupDepth].ClearUI(uIInfo);
+            }
+            else
+            {
+                FrameworkLog.Fatal($"UI Group Depth :{uIInfo.GroupDepth} non existent !");
+            }
+        }
+        public void ClearAllUI(int group)
+        {
+            if (m_AllGroup.ContainsKey(group))
+            {
+                m_AllGroup[group].ClearAllUI();
+            }
+            else
+            {
+                FrameworkLog.Fatal($"UI Group Depth :{group} non existent !");
+            }
+        }
 
 
 
