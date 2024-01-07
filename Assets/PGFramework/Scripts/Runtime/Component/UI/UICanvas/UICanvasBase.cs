@@ -14,15 +14,20 @@ namespace PGFrammework.UI
         public UIInfo GetUI { get => m_UIInfo; }
         public string AssetsName { get => m_UIInfo.AssetsName; }
 
-        public int GetDepth { get { return m_UIInfo.GroupDepth * 100 + m_UIInfo.UIDepth; } }
+        public int UIDepth
+        {
+            get { return m_UIInfo.GroupDepth * 100 + m_UIInfo.UIDepth; }
+            set {
+
+                m_UIInfo.UIDepth = value;
+                m_Canvas.sortingOrder = m_UIInfo.GroupDepth * 100 + m_UIInfo.UIDepth;
+            }
+        }
 
         public void InitUI(UIGroupInfo group, UIInfo info,object userdata)
         {
             m_GroupInfo = group;
             m_UIInfo = info;
-
-
-            m_Canvas.sortingOrder = GetDepth;
         }
         public void OpenUI(object userdata) 
         {

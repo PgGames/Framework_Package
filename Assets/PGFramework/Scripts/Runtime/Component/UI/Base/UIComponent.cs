@@ -93,7 +93,7 @@ namespace PGFrammework.Runtime
         {
             if (m_AllGroup.ContainsKey(uIInfo.GroupDepth))
             {
-                m_AllGroup[uIInfo.GroupDepth].ClearUI(uIInfo);
+                m_AllGroup[uIInfo.GroupDepth].RecoveryUI(uIInfo);
             }
             else
             {
@@ -104,7 +104,7 @@ namespace PGFrammework.Runtime
         {
             if (m_AllGroup.ContainsKey(group))
             {
-                m_AllGroup[group].ClearAllUI();
+                m_AllGroup[group].RecoveryAllUI();
             }
             else
             {
