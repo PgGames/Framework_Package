@@ -71,6 +71,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Temporary auto-generated Windows AssetBundle
-/[Aa]ssets/[Ss]treamingAssets/Windows.meta
-/[Aa]ssets/[Ss]treamingAssets/Windows/*
+# Temporary auto-generated AssetBundle
+/[Aa]ssets/[Ss]treamingAssets/ab.meta
+/[Aa]ssets/[Ss]treamingAssets/ab/*

@@ -25,7 +25,7 @@ namespace PGFrammework.Res
         /// <summary>
         /// AssetBundle资源路径
         /// </summary>
-        public static string AssetBundlePath { get { return string.Format("{0}/{1}", Application.streamingAssetsPath, Platform); } }
+        public static string AssetBundlePath { get { return string.Format("{0}/ab/{1}", Application.streamingAssetsPath, Platform); } }
 
 
 
