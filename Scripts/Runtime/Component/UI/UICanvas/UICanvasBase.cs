@@ -50,7 +50,6 @@ namespace PGFrammework.UI
                 m_CloseTimer = component.StartCoroutine(CloseTimer());
             }
             OnClose();
-
             this.gameObject.SetActive(false);
         }
 

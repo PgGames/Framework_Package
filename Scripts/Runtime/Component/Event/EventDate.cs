@@ -7,15 +7,20 @@ namespace PGFrammework.Runtime
 
 	public class EventDate
 	{
-		public EventDate(uint varID, object vardate)
+		public EventDate(int varID, object vardate)
 		{
 			mEventID = varID;
 			mEventDate = vardate;
 		}
-		private uint mEventID;
+		public EventDate(object vardate)
+		{
+			mEventDate = vardate;
+		}
+
+		private int mEventID;
 		private object mEventDate;
 
-		public uint EventId { get { return mEventID; } }
+		public int EventId { get { return mEventID; } }
 		public object Date { get { return mEventDate; } }
 	}
 

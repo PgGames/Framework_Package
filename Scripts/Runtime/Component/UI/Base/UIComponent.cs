@@ -5,7 +5,7 @@ using PGFrammework.UI;
 
 namespace PGFrammework.Runtime
 {
-    public class UIComponent : FrameworkComponent
+    public class UIComponent : FrameworkComponent,IUIComponent
     {
         [SerializeField, DisplayOnly] private List<UIGroupInfo> m_Groups = new List<UIGroupInfo>();
         /// <summary>
@@ -100,7 +100,7 @@ namespace PGFrammework.Runtime
                 FrameworkLog.Fatal($"UI Group Depth :{uIInfo.GroupDepth} non existent !");
             }
         }
-        public void ClearAllUI(int group)
+        public void ClearAllByGroup(int group)
         {
             if (m_AllGroup.ContainsKey(group))
             {
