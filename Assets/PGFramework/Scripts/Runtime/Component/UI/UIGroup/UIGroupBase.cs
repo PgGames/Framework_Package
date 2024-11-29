@@ -44,7 +44,7 @@ namespace PGFrammework.UI
             UICanvasBase uibase = GetUICanvas(uIInfo);
             uibase.CloseUI();
 
-            UpdateUIDeptg(uibase, UpdateDepthType.Close);
+            UpdateUIDepth(uibase, UpdateDepthType.Close);
 
         }
         public void RecoveryUI(UIInfo uIInfo)
@@ -52,7 +52,7 @@ namespace PGFrammework.UI
             UICanvasBase uibase = GetUICanvas(uIInfo);
             uibase.RecoveryUI();
 
-            UpdateUIDeptg(uibase, UpdateDepthType.RecoveryUI);
+            UpdateUIDepth(uibase, UpdateDepthType.RecoveryUI);
 
 
             GameObject.Destroy(uibase.gameObject);
@@ -87,11 +87,13 @@ namespace PGFrammework.UI
         }
 
 
-
-        private void UpdateUIDeptg(UICanvasBase uibase, UpdateDepthType depthType)
+        /// <summary>
+        /// 刷新界面深度
+        /// </summary>
+        /// <param name="uibase"></param>
+        /// <param name="depthType"></param>
+        private void UpdateUIDepth(UICanvasBase uibase, UpdateDepthType depthType)
         {
-
-
             switch (depthType)
             {
                 case UpdateDepthType.Open:
@@ -193,7 +195,7 @@ namespace PGFrammework.UI
                 UICanvasBase uibase = GetUICanvas(assetName);
                 if (uibase != null)
                 {
-                    UpdateUIDeptg(uibase, UpdateDepthType.Open);
+                    UpdateUIDepth(uibase, UpdateDepthType.Open);
 
                     uibase.OpenUI(usedata);
 
@@ -210,7 +212,7 @@ namespace PGFrammework.UI
                 UICanvasBase uibase = GetLastUICanvas(assetName);
                 if (uibase != null)
                 {
-                    UpdateUIDeptg(uibase, UpdateDepthType.Open);
+                    UpdateUIDepth(uibase, UpdateDepthType.Open);
 
                     uibase.OpenUI(usedata);
                     result?.Invoke(uibase, null, usedata);
@@ -283,7 +285,7 @@ namespace PGFrammework.UI
 
             uibase.InitUI(m_Info, new UIInfo(assetName, m_Info.Depth) { UIDepth = m_AllUICanvas.Count + 1 }, date.usedata);
 
-            UpdateUIDeptg(uibase, UpdateDepthType.Open);
+            UpdateUIDepth(uibase, UpdateDepthType.Open);
 
             date.result?.Invoke(uibase, null, date.usedata);
             date.success?.Invoke(uibase, userData);

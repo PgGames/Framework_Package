@@ -6,13 +6,40 @@ namespace PGFrammework.Runtime
 {
 	public class EventComponent : FrameworkComponent, IEventComponent
 	{
-		private Dictionary<uint, List<EventDelegate>> _allEvent = new Dictionary<uint, List<EventDelegate>>();
+		//private Dictionary<int, List<EventDelegate>> _allEvent = new Dictionary<int, List<EventDelegate>>();
+
+		private Dictionary<int, EventPool> _allEvent = new Dictionary<int, EventPool>();
+
 
         public override void Init()
         {
         }
 
-        public void Fire(uint eventID, object data)
+		public void Fire(Enum id, object data)
+		{
+			Fire((int)id.GetType().GetHashCode(), Convert.ToInt32(id), data);
+		}
+		public bool Check(Enum id, EventDelegate eventCallback)
+		{
+			return Check(id.GetType().GetHashCode(), Convert.ToInt32(id), eventCallback);
+		}
+		public int Count(Enum id)
+		{
+			return Count(id.GetType().GetHashCode(), Convert.ToInt32(id));
+		}
+		public void Subscribe(Enum id, EventDelegate eventCallback)
+		{
+			Subscribe(id.GetType().GetHashCode(), Convert.ToInt32(id), eventCallback);
+		}
+		public void Unsubscribe(Enum id, EventDelegate eventCallback)
+		{
+			Unsubscribe(id.GetType().GetHashCode(), Convert.ToInt32(id), eventCallback);
+		}
+
+
+
+
+		private void Fire(int eventID,int id, object data)
 		{
 			if (!_allEvent.ContainsKey(eventID))
 			{
@@ -20,79 +47,52 @@ namespace PGFrammework.Runtime
 			}
 			else
 			{
-				if (_allEvent[eventID].Count == 0)
-				{
-					FrameworkLog.Warning($"eventid {eventID} is not listen");
-				}
-				else
-				{
-					EventDate tempEvent = new EventDate(eventID, data);
-
-					var array = _allEvent[eventID];
-					for (int i = 0; i < array.Count; i++)
-					{
-						array[i].Invoke(tempEvent);
-					}
-				}
+				_allEvent[eventID].Fire(id, data);
 			}
 		}
 
-		public bool Check(uint eventID, EventDelegate eventCallback)
+		private bool Check(int eventID, int id, EventDelegate eventCallback)
 		{
 			if (_allEvent.ContainsKey(eventID))
 			{
-				if (_allEvent[eventID].Contains(eventCallback))
-				{
-					return true;
-				}
+				return _allEvent[eventID].Check(id, eventCallback);
 			}
 			return false;
 		}
 
-		public int Count(uint eventID)
+		private int Count(int eventID,int id)
 		{
 			if (_allEvent.ContainsKey(eventID))
 			{
-				return _allEvent[eventID].Count;
+				return _allEvent[eventID].Count(id);
 			}
 			return 0;
 		}
-
-
-		public void Subscribe(uint eventID, EventDelegate eventCallback)
+		/// <summary>
+		/// 订阅事件
+		/// </summary>
+		/// <param name="eventID"></param>
+		/// <param name="eventCallback"></param>
+		public void Subscribe(int eventID,int id, EventDelegate eventCallback)
 		{
 			if (_allEvent.ContainsKey(eventID))
 			{
-				if (_allEvent[eventID].Contains(eventCallback))
-				{
-					FrameworkLog.Warning($"eventid :{eventID},method:{eventCallback.Method.Name} subscribe repeat ");
-				}
-				else
-				{
-					_allEvent[eventID].Add(eventCallback);
-				}
+				_allEvent[eventID].Subscribe(id, eventCallback);
 			}
 			else
 			{
-				List<EventDelegate> delegates = new List<EventDelegate>();
-				delegates.Add(eventCallback);
+				EventPool eventPool = new EventPool();
+				eventPool.Subscribe(id, eventCallback);
 
-				_allEvent.Add(eventID, delegates);
+				_allEvent.Add(eventID, eventPool);
 			}
 		}
 
-		public void Unsubscribe(uint eventID, EventDelegate eventCallback)
+		public void Unsubscribe(int eventID, int id, EventDelegate eventCallback)
 		{
 			if (_allEvent.ContainsKey(eventID))
 			{
-				if (_allEvent[eventID].Contains(eventCallback))
-				{
-					_allEvent[eventID].Remove(eventCallback);
-				}
-				else
-				{
-					FrameworkLog.Warning($"Method :{eventCallback.Method.Name} is not subscribe event !");
-				}
+				_allEvent[eventID].Unsubscribe(id, eventCallback);
 			}
 			else
 			{

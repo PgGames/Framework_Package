@@ -22,7 +22,7 @@ namespace PGFrammework
             }
         }
         /// <summary>
-        /// ¿ò¼Ü³õÊ¼»¯
+        /// æ¡†æ¶åˆå§‹åŒ–
         /// </summary>
         public void Init()
         {
