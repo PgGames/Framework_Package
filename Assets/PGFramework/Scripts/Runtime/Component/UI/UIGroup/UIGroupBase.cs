@@ -245,7 +245,7 @@ namespace PGFrammework.UI
 
             LoadAssetCallbacks loadAsset = new LoadAssetCallbacks(LoadUISuccess, LoadUIFail, userData);
 
-            component.AsynLoadAsset(assetName, loadAsset);
+            component.AsynLoadAsset<GameObject>(assetName, loadAsset);
         }
         /// <summary>
         /// 加载资源成功

@@ -11,6 +11,7 @@ namespace PGFrammework.PGEditor
 {
     public class CommonWindow 
     {
+        public const string Editor = "PGFrammework/";
         public const string Tools = "PGFrammework/Tools";
 
 
@@ -24,22 +25,28 @@ namespace PGFrammework.PGEditor
             var dataPath = System.IO.Path.GetFullPath(".");
             dataPath = dataPath.Replace("\\", "/");
             dataPath += "/Library/FrameworkConfig/Tools_" + path + ".dat";
-            //读取数据
+            ////读取数据
+            //if (File.Exists(dataPath))
+            //{
+            //    BinaryFormatter bf = new BinaryFormatter();
+            //    FileStream file = File.OpenRead(dataPath);
+            //    try
+            //    {
+            //        date = bf.Deserialize(file) as T;
+            //        file.Close();
+            //    }
+            //    catch
+            //    {
+            //        file.Close();
+            //        Debug.LogError("Read dat error on path :" + dataPath);
+            //        File.Delete(dataPath);
+            //    }
+            //}
             if (File.Exists(dataPath))
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream file = File.OpenRead(dataPath);
-                try
-                {
-                    date = bf.Deserialize(file) as T;
-                    file.Close();
-                }
-                catch
-                {
-                    file.Close();
-                    Debug.LogError("Read dat error on path :" + dataPath);
-                    File.Delete(dataPath);
-                }
+                string jsondata = File.ReadAllText(dataPath);
+
+                date = JsonUtility.FromJson<T>(jsondata);
             }
             if (date == null)
             {
@@ -65,19 +72,23 @@ namespace PGFrammework.PGEditor
                     Directory.CreateDirectory(Path.GetDirectoryName(dataPath));
                 }
             }
-            //存储数据
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.OpenWrite(dataPath);
-            try
-            {
-                bf.Serialize(file, date);
-                file.Close();
-            }
-            catch
-            {
-                file.Close();
-                Debug.LogError("Save dat error on path :" + dataPath);
-            }
+            string jsondata = JsonUtility.ToJson(date);
+
+            File.WriteAllText(dataPath, jsondata);
+
+            ////存储数据
+            //BinaryFormatter bf = new BinaryFormatter();
+            //FileStream file = File.OpenWrite(dataPath);
+            //try
+            //{
+            //    bf.Serialize(file, date);
+            //    file.Close();
+            //}
+            //catch
+            //{
+            //    file.Close();
+            //    Debug.LogError("Save dat error on path :" + dataPath);
+            //}
         }
 
         /// <summary>

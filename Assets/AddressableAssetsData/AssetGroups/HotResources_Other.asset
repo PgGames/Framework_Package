@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: HotResources_Other
+  m_EditorClassIdentifier: 
+  m_GroupName: HotResources_Other
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d2c1048d1acd93646995d84d87a5d2fe
+  m_SerializeEntries:
+  - m_GUID: 128df2a250010704eb8dff993109f16e
+    m_Address: HotResources/Scene/Packed Assets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 80347b495afde644990c662d37ec331a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e2610e1515466364483ab644f064ebce, type: 2}
+    - {fileID: 11400000, guid: 7abe68551f9d26648ad6be76575af870, type: 2}

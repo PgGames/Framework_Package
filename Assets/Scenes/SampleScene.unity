@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -356,6 +355,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Builtin
       objectReference: {fileID: 0}
+    - target: {fileID: 2028414578290163970, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
+      propertyPath: m_LoadMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
       propertyPath: m_Groups.Array.size
       value: 2
@@ -363,6 +366,14 @@ PrefabInstance:
     - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
       propertyPath: m_Groups.Array.data[1].m_Depth
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
+      propertyPath: m_Groups.Array.data[0].m_GroupName
+      value: Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 2590456949488102974, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}
+      propertyPath: m_Groups.Array.data[1].m_GroupName
+      value: BoxMessage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccb9cf0d14cf2ae4bb5957492e9838c6, type: 3}

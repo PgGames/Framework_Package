@@ -10,7 +10,7 @@ namespace PGFrammework.Runtime
         /// </summary>
         /// <param name="assetsName">资源名称</param>
         /// <param name="loadAsset">加载回调</param>
-        void AsynLoadAsset(string assetsName, LoadAssetCallbacks loadAsset);
+        void AsynLoadAsset<T>(string assetsName, LoadAssetCallbacks loadAsset) where T: UnityEngine.Object; 
         /// <summary>
         /// 异步加载资源
         /// ps：
@@ -19,7 +19,7 @@ namespace PGFrammework.Runtime
         /// <param name="assetsName">资源名称</param>
         /// <param name="priority">加载的优先级</param>
         /// <param name="loadAsset">加载回调</param>
-        void AsynLoadAsset(string assetsName, int priority, LoadAssetCallbacks loadAsset);
+        void AsynLoadAsset<T>(string assetsName, int priority, LoadAssetCallbacks loadAsset) where T : UnityEngine.Object;
         /// <summary>
         /// 异步加载场景
         /// ps：
