@@ -35,16 +35,15 @@ namespace PGFrammework.Res
 
         #region 异步加载资源
 
-        /// <summary>
-        /// 加载资源
-        /// </summary>
-        /// <param name="varPath"></param>
-        /// <param name="Callback"></param>
-        public void LoadAssets(string varPath, LoadResourcesCallback Callback)
+        void IResourse.LoadAssets<T>(string varPath, LoadResourcesCallback<T> Callback)
         {
-            StartCoroutine(LoadAsyncAssets(varPath, Callback));
+            StartCoroutine(LoadAsyncAssets<T>(varPath, Callback));
         }
-        IEnumerator LoadAsyncAssets(string varPath, LoadResourcesCallback Callback)
+        void IResourse.LoadAssets(string assetsPath, Type assetsType, LoadResourcesCallback Callback)
+        {
+            StartCoroutine(LoadAsyncAssets(assetsPath, assetsType, Callback));
+        }
+        IEnumerator LoadAsyncAssets<T>(string varPath, LoadResourcesCallback<T> Callback) where T: UnityEngine.Object
         {
             yield return null;
             string filename = Path.GetFileNameWithoutExtension(varPath);
@@ -58,7 +57,35 @@ namespace PGFrammework.Res
             {
                 if (assetBundle.Contains(filename))
                 {
-                    UnityEngine.Object assets = assetBundle.LoadAsset(filename);
+                    T assets = assetBundle.LoadAsset<T>(filename);
+                    Callback.Invoke(varPath, assets, "");
+                }
+                else
+                {
+                    Callback.Invoke(varPath, null, "资源不存在");
+                }
+            }
+            else
+            {
+                Callback.Invoke(varPath, null, "资源不存在");
+            }
+        }
+
+        IEnumerator LoadAsyncAssets(string varPath, Type assetsType, LoadResourcesCallback Callback)
+        {
+            yield return null;
+            string filename = Path.GetFileNameWithoutExtension(varPath);
+            string assetbundlename = GetAssetBundleName(varPath);
+            AssetBundle assetBundle = null;
+            yield return StartCoroutine(LoadAsyncAssetBundle(assetbundlename, (varassetbundle) =>
+            {
+                assetBundle = varassetbundle as AssetBundle;
+            }));
+            if (assetBundle != null)
+            {
+                if (assetBundle.Contains(filename))
+                {
+                    var assets = assetBundle.LoadAsset(filename , assetsType);
                     Callback.Invoke(varPath, assets, "");
                 }
                 else
@@ -81,11 +108,11 @@ namespace PGFrammework.Res
         /// </summary>
         /// <param name="varPath"></param>
         /// <param name="Callback"></param>
-        public void LoadScene(string varPath, LoadResourcesCallback Callback)
+        public void LoadScene(string varPath, LoadSceneFinish Callback)
         {
             StartCoroutine(LoadAsyncScene(varPath, Callback));
         }
-        IEnumerator LoadAsyncScene(string varPath, LoadResourcesCallback Callback)
+        IEnumerator LoadAsyncScene(string varPath, LoadSceneFinish Callback)
         {
             yield return null;
             string filename = Path.GetFileNameWithoutExtension(varPath);
@@ -97,11 +124,11 @@ namespace PGFrammework.Res
             }));
             if (assetBundle != null)
             {
-                Callback.Invoke(varPath, null, "");
+                Callback.Invoke(varPath, "");
             }
             else
             {
-                Callback.Invoke(varPath, null, "资源不存在");
+                Callback.Invoke(varPath, "资源不存在");
             }
         }
 
@@ -116,7 +143,7 @@ namespace PGFrammework.Res
         /// <param name="varAssetBundleName"></param>
         /// <param name="assetBundleFinish"></param>
         /// <returns></returns>
-        IEnumerator LoadAsyncAssetBundle(string varAssetBundleName, LoadResourcesFinish assetBundleFinish)
+        IEnumerator LoadAsyncAssetBundle(string varAssetBundleName, LoadResourcesFinish<AssetBundle> assetBundleFinish)
         {
             //确保Key值统一标准
             varAssetBundleName = varAssetBundleName.Replace("\\", "/");

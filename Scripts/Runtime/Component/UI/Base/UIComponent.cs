@@ -7,7 +7,7 @@ namespace PGFrammework.Runtime
 {
     public class UIComponent : FrameworkComponent,IUIComponent
     {
-        [SerializeField, DisplayOnly] private List<UIGroupInfo> m_Groups = new List<UIGroupInfo>();
+        [SerializeField] private List<UIGroupInfo> m_Groups = new List<UIGroupInfo>();
         /// <summary>
         /// 定期回收关闭的窗口
         /// </summary>

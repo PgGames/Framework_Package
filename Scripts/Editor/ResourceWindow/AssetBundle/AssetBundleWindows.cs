@@ -11,7 +11,7 @@ namespace PGFrammework.PGEditor
     {
         internal static AssetBundleDate data;
 
-        [MenuItem(CommonWindow.Tools + "/Assetbundle", false, 1003)]
+        [MenuItem(CommonWindow.Editor + "Resources/Assetbundle")]
         static void Windows()
         {
             AssetBundleWindows assetBundleBuilder = EditorWindow.GetWindow(typeof(AssetBundleWindows)) as AssetBundleWindows;

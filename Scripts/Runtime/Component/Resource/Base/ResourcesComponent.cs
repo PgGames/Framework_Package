@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PGFrammework.Res;
@@ -14,11 +14,12 @@ namespace PGFrammework.Runtime
         /// <summary>
         /// 资源加载方式
         /// </summary>
-        [SerializeField] private ResourcesLoadType m_LoadMode = ResourcesLoadType.AssetBundle;
+        [SerializeField, DisplayOnly] private ResourcesLoadType m_LoadMode = ResourcesLoadType.AssetBundle;
 
 
         private UnityEditorComponent m_Editor;
         private AssetBundleComponent m_AssetBundle;
+        private AddressableComponent m_Addressable;
         /// <summary>
         /// 待加载资源
         /// </summary>
@@ -34,33 +35,35 @@ namespace PGFrammework.Runtime
 
         public override void Init()
         {
-            if (m_AssetBundle == null)
+            switch (m_LoadMode)
             {
-                GameObject tempGame = new GameObject("AssetBundle");
-                tempGame.transform.SetParent(this.transform);
-                m_AssetBundle = tempGame.AddComponent<AssetBundleComponent>();
+                case ResourcesLoadType.AssetBundle:
+                    GameObject assetbundle = new GameObject("AssetBundle");
+                    assetbundle.transform.SetParent(this.transform);
+                    m_AssetBundle = assetbundle.AddComponent<AssetBundleComponent>();
+                    break;
+                case ResourcesLoadType.Addressable:
+                    GameObject addressable = new GameObject("Addressable");
+                    addressable.transform.SetParent(this.transform);
+                    m_Addressable = addressable.AddComponent<AddressableComponent>();
+                    break;
+                default:
+                    break;
             }
-
-#if !UNITY_EDITOR
-            if (m_LoadMode == ResourcesLoadType.Editor)
-            {
-                m_LoadMode = ResourcesLoadType.AssetBundle;
-            }
-#endif
-
         }
-        public void AsynLoadAsset(string assetsName, LoadAssetCallbacks loadAsset)
+        public void AsynLoadAsset<T>(string assetsName, LoadAssetCallbacks loadAsset) where T : UnityEngine.Object
         {
-            AsynLoadAsset(assetsName, 0, loadAsset);
+            AsynLoadAsset<T>(assetsName, 0, loadAsset);
         }
 
-        public void AsynLoadAsset(string assetsName, int priority, LoadAssetCallbacks loadAsset)
+        public void AsynLoadAsset<T>(string assetsName, int priority, LoadAssetCallbacks loadAsset) where T : UnityEngine.Object
         {
             AssetsKey assets = new AssetsKey
             {
                 assetsName = assetsName,
+                assetsType = typeof(T),
                 priority = priority,
-                scene = false
+                scene = false,
             };
             AsynLoadResources(assets, loadAsset);
         }
@@ -89,6 +92,7 @@ namespace PGFrammework.Runtime
         private void AsynLoadResources(AssetsKey assetsKey, LoadAssetCallbacks loadAsset)
         {
             string assetsName = assetsKey.assetsName;
+            Type assetType = assetsKey.assetsType;
             int priority = assetsKey.priority;
             bool scene = assetsKey.scene;
 
@@ -113,7 +117,7 @@ namespace PGFrammework.Runtime
             {
                 m_CurrentLoadQueue.Add(assetsName);
 
-                ResourcesLoad(assetsName, scene);
+                ResourcesLoad(assetsName, assetType, scene);
                 return;
             }
             bool IsContains = false;
@@ -182,55 +186,61 @@ namespace PGFrammework.Runtime
                 m_WaitLoadQueue.RemoveAt(0);
                 m_CurrentLoadQueue.Add(assets.assetsName);
 
-                ResourcesLoad(assets.assetsName, assets.scene);
+                ResourcesLoad(assets.assetsName, assets.assetsType, assets.scene);
             }
         }
+
+
+        private void LoadScene(string assetsName, string error)
+        { 
+        }
+
         /// <summary>
         /// 资源加载
         /// </summary>
         /// <param name="assetsName"></param>
         /// <param name="scene"></param>
-        private void ResourcesLoad(string assetsName, bool scene)
+        private void ResourcesLoad(string assetsName,Type assetType,  bool scene)
         {
             IResourse resourse = null;
             switch (m_LoadMode)
             {
+                case ResourcesLoadType.Addressable:
+                    resourse = m_Addressable;
+                    break;
                 case ResourcesLoadType.AssetBundle:
                     resourse = m_AssetBundle;
-                    break;
-                case ResourcesLoadType.Editor:
-                    resourse = m_Editor;
                     break;
                 default:
                     throw new System.Exception($"current LoadMode {m_LoadMode} is not exist");
             }
             if (scene)
             {
-                resourse.LoadScene(assetsName, LoadAssetAsyn);
+                resourse.LoadScene(assetsName, LoadScene);
             }
             else
             {
-                resourse.LoadAssets(assetsName, LoadAssetAsyn);
+                resourse.LoadAssets(assetsName, assetType, LoadAssetAsyn);
             }
         }
 
 
-        /// <summary>
-        /// AssetBundle加载
-        /// </summary>
-        /// <param name="assetsName"></param>
-        /// <param name="scene"></param>
-        private void AssetBudleLoad(string assetsName,bool scene)
-        {
-            if (scene)
-            {
-                m_AssetBundle.LoadScene(assetsName, LoadAssetAsyn);
-            }
-            else
-            {
-                m_AssetBundle.LoadAssets(assetsName, LoadAssetAsyn);
-            }
-        }
+        ///// <summary>
+        ///// AssetBundle加载
+        ///// </summary>
+        ///// <param name="assetsName"></param>
+        ///// <param name="scene"></param>
+        //private void AssetBudleLoad(string assetsName,bool scene)
+        //{
+        //    if (scene)
+        //    {
+        //        m_AssetBundle.LoadScene(assetsName, LoadScene);
+        //    }
+        //    else
+        //    {
+        //        m_AssetBundle.LoadAssets(assetsName, LoadAssetAsyn);
+        //    }
+        //}
 
 
         /// <summary>
@@ -243,6 +253,10 @@ namespace PGFrammework.Runtime
             /// </summary>
             public string assetsName;
             /// <summary>
+            /// 资源类型
+            /// </summary>
+            public Type assetsType;
+            /// <summary>
             /// 优先级
             /// </summary>
             public int priority;
@@ -250,17 +264,6 @@ namespace PGFrammework.Runtime
             /// 是否为场景
             /// </summary>
             public bool scene;
-        }
-        /// <summary>
-        /// 资源加载类型
-        /// </summary>
-        public enum ResourcesLoadType
-        { 
-            /// <summary>
-            /// 
-            /// </summary>
-            AssetBundle,
-            Editor,
         }
     }
 }
