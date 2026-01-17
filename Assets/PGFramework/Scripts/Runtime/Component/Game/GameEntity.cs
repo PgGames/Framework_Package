@@ -11,6 +11,9 @@ namespace PGFrammework.Runtime
         private static IEventComponent m_Event;
         private static IUIComponent m_UI;
 
+        private static IResourcesComponent m_Resourse;
+
+
         /// <summary>
         /// 事件模块
         /// </summary>
@@ -33,6 +36,17 @@ namespace PGFrammework.Runtime
                     m_UI = GameComponent.Instance.GetComponent<UIComponent>();
                 }
                 return m_UI;
+            }
+        }
+
+        public static IResourcesComponent Resources
+        {
+            get {
+                if (m_Resourse == null)
+                {
+                    m_Resourse = GameComponent.Instance.GetComponent<ResourcesComponent>();
+                }
+                return m_Resourse;
             }
         }
 

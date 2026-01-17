@@ -17,7 +17,10 @@ namespace PGFrammework
             get
             {
                 if (component == null)
+                {
                     component = new GameComponent();
+                    //component.Init();
+                }
                 return component;
             }
         }
@@ -45,7 +48,6 @@ namespace PGFrammework
                 }
                 tempObject.Add(TempObject);
             }
-
             for (int i = 0; i < tempObject.Count; i++)
             {
                 FrameworkComponent component = tempObject[i] as FrameworkComponent;

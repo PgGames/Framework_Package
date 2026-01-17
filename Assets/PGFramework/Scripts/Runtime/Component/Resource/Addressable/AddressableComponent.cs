@@ -1,15 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
 namespace PGFrammework.Res
 {
     public class AddressableComponent : MonoBehaviour, IResourse
     {
-        void IResourse.LoadAssets<T>(string varPath, LoadResourcesCallback<T> Callback)
+        void IResourse.LoadAssets<T>(string varPath, LoadResourcesCallback Callback)
         {
             StartCoroutine(LoadAsset<T>(varPath, Callback));
         }
@@ -28,19 +26,12 @@ namespace PGFrammework.Res
 
         private IEnumerator LoadAsset(string varPath, System.Type assetsType, LoadResourcesCallback Callback)
         {
-            var OperationHandle = Addressables.LoadResourceLocationsAsync(varPath, assetsType);
+            var OperationHandle = Addressables.LoadAssetAsync<UnityEngine.Object>(varPath);
             yield return OperationHandle.WaitForCompletion();
-            IList<IResourceLocation> data = OperationHandle.Result;
-            foreach (var item in data)
-            {
-                if (item != null)
-                {
-                    Callback?.Invoke(varPath, item.Data as UnityEngine.Object, null);
-                }
-            }
 
+            Callback?.Invoke(varPath, OperationHandle.Result, null);
         }
-        private IEnumerator LoadAsset<T>(string varPath, LoadResourcesCallback<T> Callback) where T: UnityEngine.Object
+        private IEnumerator LoadAsset<T>(string varPath, LoadResourcesCallback Callback) where T: UnityEngine.Object
         {
             var OperationHandle = Addressables.LoadAssetAsync<T>(varPath);
             yield return OperationHandle.WaitForCompletion();

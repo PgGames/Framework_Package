@@ -16,7 +16,7 @@ namespace PGFrammework.Res
 #endif
         }
 
-        public void LoadAssets<T>(string varPath, LoadResourcesCallback<T> Callback) where T : UnityEngine.Object
+        public void LoadAssets<T>(string varPath, LoadResourcesCallback Callback) where T : UnityEngine.Object
         {
             throw new NotImplementedException();
         }
