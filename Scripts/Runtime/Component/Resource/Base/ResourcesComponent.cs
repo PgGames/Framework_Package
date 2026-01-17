@@ -58,7 +58,7 @@ namespace PGFrammework.Runtime
 
         public void AsynLoadAsset<T>(string assetsName, int priority, LoadAssetCallbacks loadAsset) where T : UnityEngine.Object
         {
-            AssetsKey assets = new AssetsKey
+            var assets = new AssetKey<T>
             {
                 assetsName = assetsName,
                 assetsType = typeof(T),
@@ -117,7 +117,7 @@ namespace PGFrammework.Runtime
             {
                 m_CurrentLoadQueue.Add(assetsName);
 
-                ResourcesLoad(assetsName, assetType, scene);
+                ResourcesLoad(assetsKey);
                 return;
             }
             bool IsContains = false;
@@ -186,7 +186,7 @@ namespace PGFrammework.Runtime
                 m_WaitLoadQueue.RemoveAt(0);
                 m_CurrentLoadQueue.Add(assets.assetsName);
 
-                ResourcesLoad(assets.assetsName, assets.assetsType, assets.scene);
+                ResourcesLoad(assets);
             }
         }
 
@@ -200,7 +200,7 @@ namespace PGFrammework.Runtime
         /// </summary>
         /// <param name="assetsName"></param>
         /// <param name="scene"></param>
-        private void ResourcesLoad(string assetsName,Type assetType,  bool scene)
+        private void ResourcesLoad(AssetsKey assets)
         {
             IResourse resourse = null;
             switch (m_LoadMode)
@@ -214,56 +214,14 @@ namespace PGFrammework.Runtime
                 default:
                     throw new System.Exception($"current LoadMode {m_LoadMode} is not exist");
             }
-            if (scene)
+            if (assets.scene)
             {
-                resourse.LoadScene(assetsName, LoadScene);
+                assets.LoadScene(resourse, LoadScene);
             }
             else
             {
-                resourse.LoadAssets(assetsName, assetType, LoadAssetAsyn);
+                assets.LoadAsset(resourse, LoadAssetAsyn);
             }
-        }
-
-
-        ///// <summary>
-        ///// AssetBundle加载
-        ///// </summary>
-        ///// <param name="assetsName"></param>
-        ///// <param name="scene"></param>
-        //private void AssetBudleLoad(string assetsName,bool scene)
-        //{
-        //    if (scene)
-        //    {
-        //        m_AssetBundle.LoadScene(assetsName, LoadScene);
-        //    }
-        //    else
-        //    {
-        //        m_AssetBundle.LoadAssets(assetsName, LoadAssetAsyn);
-        //    }
-        //}
-
-
-        /// <summary>
-        /// 资源加载key
-        /// </summary>
-        public struct AssetsKey
-        {
-            /// <summary>
-            /// 资源名称
-            /// </summary>
-            public string assetsName;
-            /// <summary>
-            /// 资源类型
-            /// </summary>
-            public Type assetsType;
-            /// <summary>
-            /// 优先级
-            /// </summary>
-            public int priority;
-            /// <summary>
-            /// 是否为场景
-            /// </summary>
-            public bool scene;
         }
     }
 }
