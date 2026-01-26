@@ -35,7 +35,7 @@ namespace PGFrammework.Res
 
         #region 异步加载资源
 
-        void IResourse.LoadAssets<T>(string varPath, LoadResourcesCallback<T> Callback)
+        void IResourse.LoadAssets<T>(string varPath, LoadResourcesCallback Callback)
         {
             StartCoroutine(LoadAsyncAssets<T>(varPath, Callback));
         }
@@ -43,7 +43,7 @@ namespace PGFrammework.Res
         {
             StartCoroutine(LoadAsyncAssets(assetsPath, assetsType, Callback));
         }
-        IEnumerator LoadAsyncAssets<T>(string varPath, LoadResourcesCallback<T> Callback) where T: UnityEngine.Object
+        IEnumerator LoadAsyncAssets<T>(string varPath, LoadResourcesCallback Callback) where T: UnityEngine.Object
         {
             yield return null;
             string filename = Path.GetFileNameWithoutExtension(varPath);

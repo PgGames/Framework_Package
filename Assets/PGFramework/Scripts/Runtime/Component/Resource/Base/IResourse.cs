@@ -10,7 +10,7 @@ namespace PGFrammework.Res
         /// </summary>
         /// <param name="varPath"></param>
         /// <param name="Callback"></param>
-        void LoadAssets<T>(string varPath, LoadResourcesCallback<T> Callback) where T : UnityEngine.Object;
+        void LoadAssets<T>(string varPath, LoadResourcesCallback Callback) where T : UnityEngine.Object;
         /// <summary>
         /// 加载资源
         /// </summary>
