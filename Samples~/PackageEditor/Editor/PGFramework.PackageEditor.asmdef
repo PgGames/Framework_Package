@@ -1,0 +1,19 @@
+{
+    "name": "PGFramework.PackageEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a38ffd26fcedcaf41bf51b1da08ffa07",
+        "GUID:fff7693027a62ff40a178bac5b1bfb0a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
