@@ -20,7 +20,7 @@
         {
             "displayName": "PackageEditor",
             "description": "Package包的Editor逻辑",
-            "path": "Samples~PackageEditor"
+            "path": "Samples~/PackageEditor"
         }
     ],
     "author": {
