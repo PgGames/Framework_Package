@@ -116,7 +116,7 @@ namespace PGFrammework.PackageEditor
         {
             //设置命令行参数
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
-            psi.FileName = $"C:\\Program Files\\Git\\git-bash.exe";
+            psi.FileName = $"C:\\Program Files (x86)\\Git\\git-bash.exe";
             psi.WorkingDirectory = m_Root;
 
             //
