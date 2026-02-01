@@ -82,7 +82,7 @@ namespace PGFrammework.PackageEditor
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("Save"))
                 {
-                    string json = JsonUtility.ToJson(m_jsonData);
+                    string json = JsonUtility.ToJson(m_jsonData, true);
                     json = json.Replace("\"keywords\"", $"{DependenciesToJson()},\"keywords\"");
 
                     File.WriteAllText(jsonPath, json);
@@ -91,7 +91,7 @@ namespace PGFrammework.PackageEditor
                 }
                 if (GUILayout.Button("Save as"))
                 {
-                    string json = JsonUtility.ToJson(m_jsonData);
+                    string json = JsonUtility.ToJson(m_jsonData, true);
                     json = json.Replace("\"keywords\"", $"{DependenciesToJson()},\"keywords\"");
 
                     string path = EditorUtility.OpenFilePanel("选择文件", jsonPath, "json");
